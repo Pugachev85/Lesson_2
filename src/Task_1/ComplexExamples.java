@@ -51,6 +51,7 @@ public class ComplexExamples {
             new Person(5, "Amelia"),
             new Person(6, "Amelia"),
             new Person(7, "Amelia"),
+            new Person(9, null),
             new Person(8, "Amelia"),
     };
         /*  Raw data:
@@ -105,7 +106,9 @@ public class ComplexExamples {
 
        if (RAW_DATA != null) {
            Map<String, List<Person>> sortedGroupedData = Arrays.stream(RAW_DATA)
+                   .filter(person -> person.name != null)
                    .distinct()
+                   .sorted(Comparator.comparingInt(Person::getId))
                    .collect(Collectors.groupingBy(Person::getName, mapping(person -> person, toList())));
 
            sortedGroupedData.forEach((p, p1) -> System.out.format("Key: %s \nValue:%d\n", p, p1.size()));
